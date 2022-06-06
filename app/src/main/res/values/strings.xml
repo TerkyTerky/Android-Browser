@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">G_Browser</string>
+
+    <string name="action_settings">设置</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="webUrlHint">输入网址</string>
+    <string name="webUrlGoto">进入</string>
+    <string name="webUrlCancel">取消</string>
+    <string name="tools">工具</string>
+    <string name="refresh">刷新</string>
+    <string name="divider">分割</string>
+    <string name="search">搜索</string>
+    <string name="favorite">书签</string>
+    <string name="hisotry">历史</string>
+    <string name="modifyfavorites">修改书签</string>
+    <string name="deletefavorites">删除书签</string>
+    <string name="name">名称：</string>
+    <string name="url">网址：</string>
+    <string name="blank"> </string>
+
+</resources>

@@ -1,0 +1,179 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".MainActivity" >
+
+    <FrameLayout
+        android:id="@+id/web_url_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:id="@+id/web_url_layout"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@android:color/holo_blue_light"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <EditText
+                android:id="@+id/web_url_input"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.8"
+                android:background="@drawable/search_back"
+                android:hint="@string/webUrlHint"
+                android:inputType="textUri"
+                android:paddingStart="5dp"
+                android:textSize="15sp"
+                tools:ignore="RtlSymmetry" />
+
+            <Button
+                android:id="@+id/web_url_goto"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.2"
+                android:text="@string/webUrlGoto"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/web_url_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.2"
+                android:text="@string/webUrlCancel" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/web_url_layout_normal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@android:color/holo_blue_light"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/web_url_show"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.8"
+                android:background="@drawable/search_back"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/web_url_show_favorite"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/favorites_button" />
+
+                <ImageView
+                    android:layout_width="2dp"
+                    android:layout_height="27dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/url_divider"
+                    android:contentDescription="@string/divider" />
+
+                <TextView
+                    android:id="@+id/web_url_show_title"
+                    android:layout_width="190dp"
+                    android:layout_height="27dp"
+                    android:layout_margin="5dp"
+                    android:hint="@string/webUrlHint" />
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/search_button"
+                    android:contentDescription="@string/divider" />
+
+                <TextView
+                    android:id="@+id/web_url_show_search"
+                    android:layout_width="30dp"
+                    android:layout_height="27dp"
+                    android:layout_marginTop="7dp"
+                    android:hint="@string/search" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/web_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/web_url_all"
+        android:layout_marginTop="5dp"
+        android:progress="0"
+        android:visibility="gone" />
+
+    <WebView
+        android:id="@+id/web_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/web_tools_bar"
+        android:layout_below="@id/web_progress_bar" />
+
+    <RelativeLayout
+        android:id="@+id/web_tools_bar"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/tools_back" >
+
+        <Button
+            android:id="@+id/pre_button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/pre_button" />
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/pre_button"
+            android:background="@drawable/next_button" />
+
+        <Button
+            android:id="@+id/tools_button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tools_button" />
+
+        <Button
+            android:id="@+id/window_button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_toStartOf="@+id/home_button"
+            android:background="@drawable/window_button" />
+
+        <Button
+            android:id="@+id/home_button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/home_button" />
+    </RelativeLayout>
+
+</RelativeLayout>
