@@ -1,179 +1,176 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ly_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context=".MainActivity" >
-
-    <FrameLayout
-        android:id="@+id/web_url_all"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <LinearLayout
-            android:id="@+id/web_url_layout"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:background="@android:color/holo_blue_light"
-            android:orientation="horizontal"
-            android:visibility="gone" >
-
-            <EditText
-                android:id="@+id/web_url_input"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.8"
-                android:background="@drawable/search_back"
-                android:hint="@string/webUrlHint"
-                android:inputType="textUri"
-                android:paddingStart="5dp"
-                android:textSize="15sp"
-                tools:ignore="RtlSymmetry" />
-
-            <Button
-                android:id="@+id/web_url_goto"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.2"
-                android:text="@string/webUrlGoto"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/web_url_cancel"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.2"
-                android:text="@string/webUrlCancel" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/web_url_layout_normal"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:background="@android:color/holo_blue_light"
-            android:baselineAligned="false"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:id="@+id/web_url_show"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.8"
-                android:background="@drawable/search_back"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/web_url_show_favorite"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/favorites_button" />
-
-                <ImageView
-                    android:layout_width="2dp"
-                    android:layout_height="27dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/url_divider"
-                    android:contentDescription="@string/divider" />
-
-                <TextView
-                    android:id="@+id/web_url_show_title"
-                    android:layout_width="190dp"
-                    android:layout_height="27dp"
-                    android:layout_margin="5dp"
-                    android:hint="@string/webUrlHint" />
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/search_button"
-                    android:contentDescription="@string/divider" />
-
-                <TextView
-                    android:id="@+id/web_url_show_search"
-                    android:layout_width="30dp"
-                    android:layout_height="27dp"
-                    android:layout_marginTop="7dp"
-                    android:hint="@string/search" />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
-
-    <ProgressBar
-        android:id="@+id/web_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/web_url_all"
-        android:layout_marginTop="5dp"
-        android:progress="0"
-        android:visibility="gone" />
-
-    <WebView
-        android:id="@+id/web_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/web_tools_bar"
-        android:layout_below="@id/web_progress_bar" />
+    android:background="@color/color_bg_primary"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <RelativeLayout
-        android:id="@+id/web_tools_bar"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/tools_back" >
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/pre_button"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/pre_button" />
-
-        <Button
-            android:id="@+id/next_button"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="2dp"
-            android:layout_toEndOf="@id/pre_button"
-            android:background="@drawable/next_button" />
-
-        <Button
-            android:id="@+id/tools_button"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/tools_button" />
-
-        <Button
-            android:id="@+id/window_button"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_toStartOf="@+id/home_button"
-            android:background="@drawable/window_button" />
-
-        <Button
-            android:id="@+id/home_button"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/btn_show_toolbar"
+            style="@style/buttonMainUIButton"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/home_button" />
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_unfold_less" />
+
+        <Button
+            android:id="@+id/btn_add_bookmark"
+            style="@style/buttonMainUIButton"
+            android:layout_toStartOf="@id/btn_show_toolbar"
+            android:layout_toLeftOf="@id/btn_show_toolbar"
+            android:background="@drawable/ic_add_bookmark" />
+        <!--imeOptions="actionDone"回车后隐藏键盘-->
+        <EditText
+            android:id="@+id/et_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@id/btn_add_bookmark"
+            android:layout_toLeftOf="@id/btn_add_bookmark"
+            android:autofillHints="@string/https"
+            android:hint="@string/https"
+            android:inputType="textUri"
+            android:lines="1"
+            android:selectAllOnFocus="true" />
+
+        <com.terky.g_browser.view.MarqueeTextView
+            android:id="@+id/tv_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@id/btn_add_bookmark"
+            android:layout_toLeftOf="@id/btn_add_bookmark"
+            android:onClick="onMainUiClick"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:scaleY="10" />
     </RelativeLayout>
 
-</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_find"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_find"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:importantForAutofill="no"
+            android:selectAllOnFocus="true"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            tools:ignore="LabelFor,TextFields" />
+
+        <TextView
+            android:id="@+id/tv_find_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_find_prev"
+            style="@style/buttonSmall"
+            android:onClick="onFindClick"
+            android:text="@string/previous" />
+
+        <Button
+            android:id="@+id/btn_find_next"
+            style="@style/buttonSmall"
+            android:onClick="onFindClick"
+            android:text="@string/next" />
+
+        <Button
+            android:id="@+id/btn_find_cancel"
+            style="@style/buttonSmall"
+            android:onClick="onFindClick"
+            android:text="@string/cancel" />
+    </LinearLayout>
+
+    <com.terky.g_browser.web.UWebView
+        android:id="@+id/wv_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/ly_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_home"
+            style="@style/buttonMainUIButton"
+            android:background="@drawable/ic_home" />
+
+        <Button
+            android:id="@+id/btn_back"
+            style="@style/buttonMainUIButton"
+            android:background="@drawable/ic_arrow_back" />
+
+        <Button
+            android:id="@+id/btn_forward"
+            style="@style/buttonMainUIButton"
+            android:background="@drawable/ic_arrow_forward" />
+
+        <Button
+            android:id="@+id/btn_refresh"
+            style="@style/buttonMainUIButton"
+            android:background="@drawable/ic_refresh" />
+
+        <Button
+            android:id="@+id/btn_scanning"
+            style="@style/buttonMainUIButton"
+            android:background="@drawable/ic_scanning" />
+
+        <Button
+            android:id="@+id/btn_bookmark"
+            style="@style/buttonMainUIButton"
+            android:background="@drawable/ic_bookmarks" />
+
+        <CheckBox
+            android:id="@+id/cb_javascript"
+            style="@style/buttonSmallNoMargin"
+            android:background="@drawable/ic_js"
+            android:button="@drawable/btn_check" />
+
+        <CheckBox
+            android:id="@+id/cb_image"
+            style="@style/buttonSmallNoMargin"
+            android:background="@drawable/ic_image"
+            android:button="@drawable/btn_check" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_other"
+            style="@style/buttonMainUIButton"
+            android:background="@drawable/ic_more_vert" />
+
+    </LinearLayout>
+</LinearLayout>
+

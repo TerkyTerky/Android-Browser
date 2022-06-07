@@ -7,18 +7,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- 底部导航栏一项 -->
-    <style name="NavItem">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">#fff</item>
+    <style name="buttonSmall">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">25dp</item>
+        <item name="android:minWidth">25dp</item>
+        <item name="android:background">@drawable/bg_txt_button</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
-    <!-- 底部导航图标 -->
-    <style name="NavIcon">
-        <item name="android:layout_width">20dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_centerInParent">true</item>
+    <style name="buttonSmallNoMargin" parent="@style/buttonSmall">
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
     </style>
+
+    <style name="buttonMainUIButton" parent="@style/buttonSmallNoMargin">
+        <item name="android:onClick">onMainUiClick</item>
+    </style>
+
 </resources>

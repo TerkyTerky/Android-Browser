@@ -1,21 +1,36 @@
 <resources>
     <string name="app_name">G_Browser</string>
 
-    <string name="action_settings">设置</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="webUrlHint">输入网址</string>
-    <string name="webUrlGoto">进入</string>
-    <string name="webUrlCancel">取消</string>
-    <string name="tools">工具</string>
-    <string name="refresh">刷新</string>
-    <string name="divider">分割</string>
-    <string name="search">搜索</string>
-    <string name="favorite">书签</string>
-    <string name="hisotry">历史</string>
-    <string name="modifyfavorites">修改书签</string>
-    <string name="deletefavorites">删除书签</string>
-    <string name="name">名称：</string>
-    <string name="url">网址：</string>
-    <string name="blank"> </string>
+    <string name="https" translatable="false">https://</string>
+    <string name="clearCache">Clear Cache</string>
+    <string name="loadDefault">LoadDefaultSettings</string>
+    <string name="translation">Trans</string>
+    <string name="scan_with_camera">Scan with camera</string>
+    <string name="scan_local_picture">Scan local picture</string>
+    <string name="download_picture">Download picture</string>
+    <string name="scan_qr">Scan QR code</string>
+    <string name="enabled_javascript">enabled javascript</string>
+    <string name="ok">OK</string>
+    <string name="settings">Settings</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="clear_all">Clear All</string>
+    <string name="next">Next</string>
+    <string name="cancel">Cancel</string>
+    <string name="previous">Prev</string>
+    <string name="find">Find</string>
+    <string name="textZoom">TextZoom%(10~1000):</string>
+    <string name="need_js">need to enable javascript</string>
+    <string name="trans_ok">OK</string>
+    <string name="dark_mode_switch">Dark Mode Switch</string>
+    <string name="edit_home">Edit Home…</string>
+    <string name="download_manager">Download Manager</string>
+    <string name="exit">Exit</string>
+    <string name="about">About</string>
+    <string name="about_content" translatable="false">
+        "Update Site:"
+        "\nhttps://gitee.com/wuruiyou/ub/tree/master/app/release"
+        "\n"
+        "\nQQ: 461301120"
+    </string>
 
 </resources>

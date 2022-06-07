@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UB</string>
+    <string name="clearCache">清楚缓存</string>
+    <string name="loadDefault">还原默认设置</string>
+    <string name="translation">翻译</string>
+    <string name="scan_with_camera">相机扫描</string>
+    <string name="scan_local_picture">扫描本地图片</string>
+    <string name="download_picture">下载图片</string>
+    <string name="scan_qr">扫描图片二维码</string>
+    <string name="enabled_javascript">使用 javascript</string>
+    <string name="ok">确定</string>
+    <string name="settings">设置</string>
+    <string name="bookmarks">书签</string>
+    <string name="clear_all">清除</string>
+    <string name="next">下一个</string>
+    <string name="cancel">取消</string>
+    <string name="previous">上一个</string>
+    <string name="find">查找</string>
+    <string name="textZoom">字体缩放%(10~1000):</string>
+    <string name="need_js">需要开启 javascript 功能</string>
+    <string name="trans_ok">完成</string>
+    <string name="dark_mode_switch">黑夜模式开关</string>
+    <string name="edit_home">编辑主页…</string>
+    <string name="download_manager">下载管理器</string>
+    <string name="exit">退出</string>
+    <string name="about">关于</string>
+</resources>

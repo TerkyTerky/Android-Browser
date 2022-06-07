@@ -7,6 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="color_bg_stroke">#ff777777</color>
+    <color name="color_bg_pressed">#ff7777bb</color>
+    <color name="color_bg_primary">#ffbbbbbb</color>
+    <color name="color_gradient_start">#ff8888aa</color>
+    <color name="color_gradient_center">#ff6666ff</color>
+    <color name="dark">#000000</color>
+    <color name="dark_mode_bg">#332f22</color>
+    <color name="dark_mode_for">#dededf</color>
     <!-- 下拉到底的阴影 -->
     <color name="colorPrimary">#bababa</color>
 
