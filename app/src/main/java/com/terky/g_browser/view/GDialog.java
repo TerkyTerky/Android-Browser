@@ -7,7 +7,7 @@ import android.view.*;
 import android.util.*;
 import android.app.*;
 
-public class UDialog {
+public class GDialog {
     public static void showSelectableDialog(Context context, String msg) {
         TextView tv=new TextView(context);
         tv.setText(msg);

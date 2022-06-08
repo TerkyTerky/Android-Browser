@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -36,10 +37,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.terky.g_browser.database.BookmarkDAO;
+import com.terky.g_browser.entity.Bookmark;
 import com.terky.g_browser.utils.QrUtil;
 import com.terky.g_browser.view.MarqueeTextView;
-import com.terky.g_browser.view.UDialog;
-import com.terky.g_browser.web.UWebView;
+import com.terky.g_browser.view.GDialog;
+import com.terky.g_browser.web.GWebView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,19 +56,22 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
     private long lastBackPressedTime = 0;
     private boolean bRefresh = false;
     private String findText = "";
-    private UWebView mWeb;
+    private GWebView mWeb;
     private EditText etUrl;
     private MarqueeTextView tvUrl;
     private View lyTools;
     // Preferences data
     private static final String SHARED_PREFERENCES = "main.sp";
     private static final List<HashMap<String, String>> bookmarks = new ArrayList<>();
+    private static final List<HashMap<String, String>> history = new ArrayList<>();
+    private static final List<HashMap<String, String>> cloudBookmarks = new ArrayList<>();
     private String homeUrl;
     private boolean hideTools;
 
     //储存设置，书签等的相关标志
     static class DataFlag {
         static final String BOOKMARK = "bookmark:";
+        static final String HISTORY = "history:";
         static final String SETTING = "setting:";
         static final String HOME = "home:";
         static final String Hide_Tools = "show_tools:";
@@ -84,6 +90,7 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
             mWeb.loadUrl(getIntent().getData().toString());
             return;
         }
+        homeUrl = "https://www.baidu.com/";
         mWeb.loadUrl(homeUrl);
     }
 
@@ -157,7 +164,7 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
                 tv.setText(s);
             }
         });
-        mWeb.setStateListener(new UWebView.StateListener() {
+        mWeb.setStateListener(new GWebView.StateListener() {
             @Override
             public void onStateChanged(WebView v, int stateType, Object... args) {
                 switch (stateType) {
@@ -262,20 +269,25 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
                 0).edit();
         editor.clear();
         // Save WebView settings
-        for (String opSetting : UWebView.OPTIONS) {
+        for (String opSetting : GWebView.OPTIONS) {
             Object result = mWeb.invokeSettingsMethod(
                     "get" + opSetting, false, null);
             putObj2Pref(editor, DataFlag.SETTING + opSetting, result);
         }
-        for (String opt : UWebView.OPTIONS_EXTRA) {
+        for (String opt : GWebView.OPTIONS_EXTRA) {
             Object result = mWeb.invokeSettingsMethod(
                     "get" + opt, false, null);
             putObj2Pref(editor, DataFlag.SETTING + opt, result);
         }
         // Save bookmarks
         for (HashMap<String, String> item : bookmarks) {
-            editor.putString(DataFlag.BOOKMARK + item.get(BOOKMARK_URL),
-                    item.get(BOOKMARK_TITLE));
+            editor.putString(DataFlag.BOOKMARK +
+                            item.get(BOOKMARK_URL), item.get(BOOKMARK_TITLE));
+        }
+        // Save history
+        for (HashMap<String,String> item : history) {
+            editor.putString(DataFlag.HISTORY +
+                            item.get(BOOKMARK_URL), item.get(BOOKMARK_TITLE));
         }
         // Save homeUrl
         editor.putString(DataFlag.HOME, homeUrl);
@@ -303,7 +315,14 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
                         item.getKey().substring(DataFlag.BOOKMARK.length()));
                 bm.put(BOOKMARK_TITLE, (String) item.getValue());
                 bookmarks.add(bm);
-            } else if (item.getKey().startsWith(DataFlag.HOME)) {
+            } else if (item.getKey().startsWith(DataFlag.HISTORY)){
+                // History
+                HashMap<String,String> histRecord = new HashMap<>();
+                histRecord.put(BOOKMARK_URL, item.getKey());
+                histRecord.put(BOOKMARK_TITLE, (String) item.getValue());
+                history.add(histRecord);
+            }
+            else if (item.getKey().startsWith(DataFlag.HOME)) {
                 // Home url
                 homeUrl = (String) item.getValue();
             } else if (item.getKey().startsWith(DataFlag.Hide_Tools)) {
@@ -360,7 +379,7 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
                 R.layout.layout_settings, null);
         //添加并初始化settings选项
         LinearLayout ly = dialogView.findViewById(R.id.ly_boolean_settings);
-        for (final String settingsName : UWebView.OPTIONS) {
+        for (final String settingsName : GWebView.OPTIONS) {
             CheckBox cb = new CheckBox(dialogView.getContext());
             cb.setText(settingsName);
             String methodName = "get" + settingsName;
@@ -441,13 +460,12 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
     private void showBookmarks() {
         // 书签列表
         // 读取列表
-        final SimpleAdapter listAdapter
-                = new SimpleAdapter(getApplicationContext(),
-                bookmarks, R.layout.layout_bookmark_item,
-                new String[]{BOOKMARK_TITLE, BOOKMARK_URL},
-                new int[]{R.id.tv_bm_title, R.id.tv_bm_url});
-        final View dialogView =
-                LayoutInflater.from(this).inflate(R.layout.bookmarks, null);
+        final SimpleAdapter listAdapter = new SimpleAdapter(
+                                                    getApplicationContext(),
+                                                    bookmarks, R.layout.layout_bookmark_item,
+                                                    new String[]{BOOKMARK_TITLE, BOOKMARK_URL},
+                                                    new int[]{R.id.tv_bm_title, R.id.tv_bm_url});
+        final View dialogView = LayoutInflater.from(this).inflate(R.layout.bookmarks, null);
         ListView lv = dialogView.findViewById(R.id.lv_bookmarks);
         lv.setAdapter(listAdapter);
         // 创建书签面板
@@ -509,6 +527,79 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
                         dialogView.getLayoutParams().height = h;
                     }
                 });
+    }
+
+    /*显示历史记录*/
+    public void showHistory(){
+        final SimpleAdapter listAdapter = new SimpleAdapter(
+                getApplicationContext(),
+                history, R.layout.layout_history_item,
+                new String[]{BOOKMARK_TITLE, BOOKMARK_URL},
+                new int[]{R.id.tv_history_title, R.id.tv_history_url});
+        final View dialogView = LayoutInflater.from(this).inflate(R.layout.history, null);
+        ListView lv = dialogView.findViewById(R.id.lv_history);
+        lv.setAdapter(listAdapter);
+        // 创建历史面板
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView).create();
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position
+                    , long id) {
+                mWeb.loadUrl(history.get(position).get(BOOKMARK_URL));
+                dialog.dismiss();
+            }
+        });
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> parent,
+                                           final View view,
+                                           final int position, long id) {
+                final PopupMenu menu = new PopupMenu(getApplicationContext(), view);
+                menu.getMenu().add("delete");
+                menu.getMenu().add("cancel");
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getTitle().equals("delete")) {
+                            history.remove(position);
+                            listAdapter.notifyDataSetChanged();
+                        }
+                        return true;
+                    }
+                });
+                menu.show();
+                return true;
+            }
+        });
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                if (v.getId() == R.id.btn_history_clear) {
+                    history.clear();
+                    listAdapter.notifyDataSetChanged();
+                }
+            }
+        };
+        dialogView.findViewById(R.id.btn_history_clear).setOnClickListener(listener);
+        dialogView.findViewById(R.id.btn_history_ok).setOnClickListener(listener);
+        dialog.show();
+
+        // 设置最大高度
+        dialogView.addOnLayoutChangeListener(
+                new View.OnLayoutChangeListener() {
+                    @Override
+                    public void onLayoutChange(
+                            View v, int left, int top, int right, int bottom,
+                            int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                        int h = getResources().getDisplayMetrics().heightPixels;
+                        h = Math.min(h * 2 / 3, v.getHeight());
+                        dialogView.getLayoutParams().height = h;
+                    }
+                });
+
     }
 
     /**
@@ -644,18 +735,33 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
         } else {
             result = "scanning result:\n\n" + result;
         }
-        UDialog.showSelectableDialog(this, result);
+        GDialog.showSelectableDialog(this, result);
     }
 
     // had invoked by style.buttonMainUIButton
-    public void onMainUiClick(View v) {
+    public void onMainUiClick(View v) throws ClassNotFoundException {
+
         int id = v.getId();
+
+        Bookmark bk = new Bookmark();
+
         if (id == R.id.btn_add_bookmark) {
             //以url为键，因为title可能会有重复
             HashMap<String, String> bm = new HashMap<>();
             bm.put(BOOKMARK_TITLE, mWeb.getTitle());
             bm.put(BOOKMARK_URL, mWeb.getUrl());
+            System.out.println(mWeb.getUrl());
+            bk.setWebName(mWeb.getTitle());
+            bk.setUri(mWeb.getUrl());
+
+            BookmarkDAO.add(bk);
             bookmarks.add(bm);
+
+            HashMap<String,String> ht = new HashMap<>();
+            ht.put(BOOKMARK_TITLE, mWeb.getTitle());
+            ht.put(BOOKMARK_URL, mWeb.getUrl());
+
+            history.add(ht);
             showMessage("添加书签成功。");
         } else if (id == R.id.btn_show_toolbar) {
             int visibility = hideTools ? View.VISIBLE : View.GONE;
@@ -684,7 +790,10 @@ public class MainActivity extends Activity implements TextView.OnEditorActionLis
             showScanningDialog();
         } else if (id == R.id.btn_bookmark) {
             showBookmarks();
-        } else if (id == R.id.btn_other) {
+        } else if (id == R.id.btn_history){
+            showHistory();
+        }
+        else if (id == R.id.btn_other) {
             showOtherSetting(v);
         } else if (id == R.id.tv_url) {
             v.setVisibility(View.GONE);

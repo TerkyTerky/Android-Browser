@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-public class MarqueeTextView extends androidx.appcompat.widget.AppCompatTextView {
+public class MarqueeTextView extends TextView {
     public MarqueeTextView(Context context) {
         this(context,null);
     }

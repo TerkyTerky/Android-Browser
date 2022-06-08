@@ -15,10 +15,10 @@ import android.widget.Toast;
 
 import java.io.File;
 
-public class UDownloadUtil implements DownloadListener {
+public class GDownloadUtil implements DownloadListener {
     Context context;
 
-    public UDownloadUtil(Context context) {
+    public GDownloadUtil(Context context) {
         this.context = context;
     }
 

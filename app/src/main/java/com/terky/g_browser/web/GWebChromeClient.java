@@ -13,19 +13,19 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
-import com.terky.g_browser.view.UVideoView;
+import com.terky.g_browser.view.GVideoView;
 import com.terky.g_browser.R;
 
 /**
  * 辅助WebView处理Javascript的对话框、网站图标、网站title、加载进度等
  **/
-public class UWebChromeClient extends WebChromeClient {
+public class GWebChromeClient extends WebChromeClient {
 
-    private final UWebView uwv;
+    private final GWebView uwv;
     private Activity activity;
-    private UWebView.StateListener mListener;
+    private GWebView.StateListener mListener;
 
-    public UWebChromeClient(UWebView uwv) {
+    public GWebChromeClient(GWebView uwv) {
         this.uwv = uwv;
         Context c = uwv.getContext();
         if (c instanceof Activity) {
@@ -61,7 +61,7 @@ public class UWebChromeClient extends WebChromeClient {
         super.onReceivedTitle(view, title);
         if ((mListener = uwv.getStateListener()) != null) {
             mListener.onStateChanged(uwv,
-                    UWebView.StateListener.STATE_RECEIVED_TITLE, title);
+                    GWebView.StateListener.STATE_RECEIVED_TITLE, title);
         }
     }
 
@@ -82,7 +82,7 @@ public class UWebChromeClient extends WebChromeClient {
         super.onShowCustomView(view, callback);
         normalLayout = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
         setFullScreen(true);
-        View videoView = new UVideoView(activity);
+        View videoView = new GVideoView(activity);
         activity.setContentView(videoView);
         FrameLayout fl = activity.findViewById(R.id.fl_video_container);
         fl.addView(view);

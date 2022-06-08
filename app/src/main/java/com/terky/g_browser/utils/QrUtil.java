@@ -7,8 +7,6 @@ import java.util.*;
 
 public class QrUtil
 {
-
-
     public static String decodeQRCode(Bitmap bmp) {
         Map<DecodeHintType, Object> hints = new HashMap<>();
         hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");

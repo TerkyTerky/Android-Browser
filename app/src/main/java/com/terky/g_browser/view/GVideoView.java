@@ -19,17 +19,17 @@ import java.util.TimerTask;
 
 import com.terky.g_browser.R;
 
-public class UVideoView extends RelativeLayout implements View.OnClickListener, View.OnTouchListener {
+public class GVideoView extends RelativeLayout implements View.OnClickListener, View.OnTouchListener {
 
     private final ImageButton ib;
     RelativeLayout rlCover;
 
-    public UVideoView(Context context) {
+    public GVideoView(Context context) {
         this(context, null);
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    public UVideoView(Context context, @Nullable AttributeSet attrs) {
+    public GVideoView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         // 利用布局文件填充View实例
         inflate(context, R.layout.layout_fullscreen, this);
@@ -65,15 +65,15 @@ public class UVideoView extends RelativeLayout implements View.OnClickListener, 
     private long startTime = 0;
 
     private static class MHandler extends Handler {
-        WeakReference<UVideoView> wr;
+        WeakReference<GVideoView> wr;
 
-        public MHandler(UVideoView uvv) {
+        public MHandler(GVideoView uvv) {
             wr = new WeakReference<>(uvv);
         }
 
         @Override
         public void handleMessage(@NonNull Message msg) {
-            UVideoView uvv = wr.get();
+            GVideoView uvv = wr.get();
             if (uvv == null) {
                 return;
             }

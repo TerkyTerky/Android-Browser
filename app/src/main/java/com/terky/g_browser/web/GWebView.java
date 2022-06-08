@@ -27,7 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.terky.g_browser.utils.QrUtil;
-import com.terky.g_browser.utils.UDownloadUtil;
+import com.terky.g_browser.utils.GDownloadUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,9 +39,9 @@ import java.lang.reflect.Method;
 import java.net.URL;
 
 import com.terky.g_browser.R;
-import com.terky.g_browser.view.UDialog;
+import com.terky.g_browser.view.GDialog;
 
-public class UWebView extends WebView implements View.OnLongClickListener {
+public class GWebView extends WebView implements View.OnLongClickListener {
 
     // user agent
     public static final String STR_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
@@ -68,7 +68,7 @@ public class UWebView extends WebView implements View.OnLongClickListener {
             "TextZoom"
     };
 
-    private UDownloadUtil downloadUtil;
+    private GDownloadUtil downloadUtil;
     private final String SHARED_PREF = "web_view.sp";
     private boolean allowCallOtherApp = false;// 是否允许调用外部应用
     private boolean enabledTranslationJS;
@@ -100,11 +100,11 @@ public class UWebView extends WebView implements View.OnLongClickListener {
     }
 
     // 构造函数
-    public UWebView(Context context) {
+    public GWebView(Context context) {
         this(context, null);
     }
 
-    public UWebView(Context context, AttributeSet attrs) {
+    public GWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
         readPreferences();
@@ -115,11 +115,11 @@ public class UWebView extends WebView implements View.OnLongClickListener {
      */
     @SuppressLint("AddJavascriptInterface")
     private void initView() {
-        downloadUtil = new UDownloadUtil(getContext());
+        downloadUtil = new GDownloadUtil(getContext());
         setDownloadListener(downloadUtil);
         setOnLongClickListener(this);
-        setWebChromeClient(new UWebChromeClient(this));
-        setWebViewClient(new UWebViewClient(this));
+        setWebChromeClient(new GWebChromeClient(this));
+        setWebViewClient(new GWebViewClient(this));
         WebSettings sets = this.getSettings();
         File cacheDir = getContext().getExternalCacheDir();
         if (cacheDir != null) {
@@ -277,7 +277,7 @@ public class UWebView extends WebView implements View.OnLongClickListener {
                     @Override
                     public void onClick(View p1) {
                         dialog.dismiss();
-                        new ScanInternetPicture(UWebView.this).execute(htr.getExtra());
+                        new ScanInternetPicture(GWebView.this).execute(htr.getExtra());
                     }
                 });
         LinearLayout ll = new LinearLayout(c);
@@ -291,9 +291,9 @@ public class UWebView extends WebView implements View.OnLongClickListener {
 
     // 扫描网络图片
     private static class ScanInternetPicture extends AsyncTask<String, Integer, String> {
-        WeakReference<UWebView> wr;
+        WeakReference<GWebView> wr;
 
-        public ScanInternetPicture(UWebView uwv) {
+        public ScanInternetPicture(GWebView uwv) {
             wr = new WeakReference<>(uwv);
         }
 
@@ -312,10 +312,10 @@ public class UWebView extends WebView implements View.OnLongClickListener {
 
         @Override
         protected void onPostExecute(String result) {
-            UWebView uwv = wr.get();
+            GWebView uwv = wr.get();
             if (uwv != null) {
                 result = "scanning result:\n\n" + result;
-                UDialog.showSelectableDialog(uwv.getContext(), result);
+                GDialog.showSelectableDialog(uwv.getContext(), result);
             }
         }
     }
@@ -391,7 +391,7 @@ public class UWebView extends WebView implements View.OnLongClickListener {
                         if (item.getTitle().toString().equals(strTrans)) {
                             showTranslation(selTxt);
                         } else {
-                            stateListener.onStateChanged(UWebView.this,
+                            stateListener.onStateChanged(GWebView.this,
                                     stateListener.STATE_FIND_START, selTxt);
                         }
                     }
@@ -415,7 +415,7 @@ public class UWebView extends WebView implements View.OnLongClickListener {
         String url = "https://m.youdao.com/dict?le=eng&q=" + sourceText;
         Context context = getContext();
         View v = LayoutInflater.from(context).inflate(R.layout.translation, null);
-        final UWebView uwv = v.findViewById(R.id.uwv_translation);
+        final GWebView uwv = v.findViewById(R.id.uwv_translation);
         uwv.setEnabledFind(false);
         uwv.getSettings().setBlockNetworkImage(!enabledTranslationJS);
         uwv.getSettings().setJavaScriptEnabled(enabledTranslationJS);

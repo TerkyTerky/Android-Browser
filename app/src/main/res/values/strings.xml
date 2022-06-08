@@ -27,10 +27,10 @@
     <string name="exit">Exit</string>
     <string name="about">About</string>
     <string name="about_content" translatable="false">
-        "Update Site:"
-        "\nhttps://gitee.com/wuruiyou/ub/tree/master/app/release"
-        "\n"
-        "\nQQ: 461301120"
+        "zyj bu tai cong ming"
     </string>
+    <string name="history">History</string>
+    <string name="cloud">Cloud</string>
+
 
 </resources>

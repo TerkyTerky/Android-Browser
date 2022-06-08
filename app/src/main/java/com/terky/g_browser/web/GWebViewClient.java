@@ -6,15 +6,19 @@ import android.net.Uri;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * 辅助WebView处理各种通知与请求事件
  **/
-public class UWebViewClient extends WebViewClient {
+public class GWebViewClient extends WebViewClient {
 
-    private final UWebView uwv;
-    private UWebView.StateListener mListener;
+    private final GWebView uwv;
+    private GWebView.StateListener mListener;
 
-    public UWebViewClient(UWebView uwv) {
+
+    public GWebViewClient(GWebView uwv) {
         this.uwv = uwv;
     }
 
