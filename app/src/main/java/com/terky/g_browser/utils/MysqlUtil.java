@@ -18,9 +18,9 @@ public class MysqlUtil {
             String driver = "com.mysql.jdbc.Driver";
             Class.forName(driver);
 
-            String url = "jdbc:mysql://101.132.222.83:3306/CurriDesign?characterEncoding=utf-8";
-            String user = "root";
-            String password = "woshishabi";
+            String url = "jdbc:mysql://IP/DATABASENAME?characterEncoding=utf-8";
+            String user = "USER";
+            String password = "SECRET";
 
             connection = DriverManager.getConnection(url, user, password);
             Log.e("getConnect","success");
